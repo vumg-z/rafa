@@ -1,0 +1,7 @@
+# Ignore archivos generados por Tailwind
+/dist
+/node_modules
+
+# Ignore archivos de caché
+/.cache
+/public/static/css/.sass-cache
