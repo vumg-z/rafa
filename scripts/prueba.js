@@ -1,17 +1,20 @@
-// Seleccionamos los paths que queremos animar
-const paths = document.querySelectorAll("path");
+// Selecciona los elementos SVG por sus identificadores
+const c = document.getElementById('c');
+const r = document.getElementById('r');
+const e1 = document.getElementById('e1');
+const a = document.getElementById('a');
+const r2 = document.getElementById('r2');
+const e2 = document.getElementById('e2');
+const d = document.getElementById('d');
 
-// Creamos una nueva animación con GSAP
-const tl = gsap.timeline({ repeat: -1, yoyo: true });
+// Crea una nueva línea de tiempo de GSAP
+const tl = gsap.timeline({ delay: 1 });
 
-// Ocultamos todos los paths al principio de la animación
-tl.set(paths, { opacity: 0 });
-
-// Añadimos una animación para cada path
-paths.forEach((path, index) => {
-  tl.to(path, { opacity: 1, duration: 0.5 }, index * 0.5); // Hacemos aparecer cada path con un delay progresivo
-  tl.to(path, { strokeDashoffset: 0, duration: 1, ease: "power1.out" }, index * 0.5); // Animamos el trazo del path para que se dibuje
-});
-
-// Reproducimos la animación
-tl.play();
+// Agrega animaciones para cada letra a la línea de tiempo
+tl.fromTo(c, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' })
+  .fromTo(r, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' })
+  .fromTo(e1, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' })
+  .fromTo(a, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' })
+  .fromTo(r2, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' })
+  .fromTo(e2, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' })
+  .fromTo(d, { opacity: 0, y: -20 }, { duration: 0.5, opacity: 1, y: 0, ease: 'linear' });
