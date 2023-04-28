@@ -7,24 +7,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GSAP Hola Mundo</title>
     <link href="./dist/output.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 
 </head>
 
 <body>
 
+
+
     <body>
+        <section class="h-screen w-screen">
+            <div id="principal" class="bg-yellow-400 text-white text-center   flex h-full relative z-30">
 
-        
-        <footer class="absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center">
-            <img src="./assets/logofooter.svg" alt="">
-        </footer>
+                <!-- canvas y mensaje -->
+                <div id="canvasContainer" style="position: relative; width: 100%; height: 100%;">
+                    <canvas id="myCanvas" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
+                    <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold z-50"
+                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <img src="./assets/navlogo.svg" alt="" srcset="">
+                    </div>
+                </div>
+                
+
+                <div id="nav"
+                    class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full z-50">
+                    <img src="./assets/navlogo.svg" alt="logo" class="h-12 w-auto">
+
+                    <nav class="bg-yellow-400 rounded-full shadow-lg ml-auto mr-4">
+                        <ul class="flex items-center justify-end h-10 pr-6">
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black current-page">Inicio</a>
+                            </li>
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
+                                    de</a>
+                            </li>
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
+                            </li>
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
+                </div>
+
+                <div id="footer">
+                    <footer
+                        class="first absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center z-50">
+                        <img src="./assets/logofooter.svg" alt="">
+                    </footer>
+                </div>
 
 
+                <!-- <div id="logo">
+                    <h2> creared logo </h2>
+                </div>
 
+                <div id="buttonCall">
+                    <h2>boton llamar</h2>
+                </div>
 
+            -->
+            </div>
 
-
-
+            <style>
+                #principalLogo {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            </style>
+            <div>
+                <img id="principalLogo" class="absolute z-1" src="./assets/crearedsonic.svg" alt="">
+            </div>
+        </section>
 
 
 
@@ -32,8 +97,70 @@
 
     <!-- Incluir la biblioteca GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <!-- <script src="./scripts/prueba.js"></script> -->
+    <script src="./scripts/index.js"></script>
+    <script>
+        // Obtener el elemento canvas
+        const canvas = document.getElementById('myCanvas');
 
+        // Crear escena, cámara y renderizador
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+        renderer.setClearColor(0xF8D038); // Color en hexadecimal
+
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = 5;
+
+        // Crear material y geometría para la línea
+        const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+        const geometry = new THREE.BufferGeometry().setFromPoints([]);
+
+        // Crear línea y agregarla a la escena
+        const line = new THREE.Line(geometry, material);
+        scene.add(line);
+
+        // Crear arreglo temporal para almacenar los puntos
+        const points = [];
+
+        // Actualizar la línea cuando el mouse se mueve
+        canvas.addEventListener('mousemove', (event) => {
+            // Convertir las coordenadas del mouse a coordenadas de espacio de Three.js
+            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // Proyectar un rayo desde la cámara hasta el mouse
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(new THREE.Vector2(mouseX, mouseY), camera);
+
+            // Encontrar el punto de intersección entre el rayo y el plano Z=0
+            const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+            const intersection = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, intersection);
+
+            // Agregar el punto de intersección al arreglo temporal de puntos
+            points.push(intersection);
+
+            // Actualizar la geometría de la línea
+            line.geometry.setFromPoints(points);
+            line.geometry.attributes.position.needsUpdate = true;
+        });
+
+        // Borrar la línea después de un tiempo
+        setInterval(() => {
+            points.length = 0;
+            line.geometry.setFromPoints(points);
+            line.geometry.attributes.position.needsUpdate = true;
+        }, 1000);
+
+        // Función de animación
+        const animate = () => {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        };
+
+        animate();
+    </script>
 </body>
 
 </html>
