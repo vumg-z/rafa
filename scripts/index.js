@@ -22,3 +22,5 @@ setTimeout(() => {
   });
 
 }, 3000);
+
+// hacer que canvas sea visible e "interactuable" despues de que las animacion de GSAP hayan

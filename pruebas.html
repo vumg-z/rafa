@@ -24,11 +24,11 @@
                 <div id="canvasContainer" style="position: relative; width: 100%; height: 100%;">
                     <canvas id="myCanvas" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
                     <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold z-50"
-                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                         <img src="./assets/navlogo.svg" alt="" srcset="">
                     </div>
                 </div>
-                
+
 
                 <div id="nav"
                     class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full z-50">
@@ -97,7 +97,7 @@
 
     <!-- Incluir la biblioteca GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js"></script> 
     <script>
         // Obtener el elemento canvas
         const canvas = document.getElementById('myCanvas');
@@ -108,50 +108,47 @@
         const renderer = new THREE.WebGLRenderer({ canvas: canvas });
         renderer.setClearColor(0xF8D038); // Color en hexadecimal
 
-
         renderer.setSize(window.innerWidth, window.innerHeight);
         camera.position.z = 5;
 
-        // Crear material y geometría para la línea
-        const material = new THREE.LineBasicMaterial({ color: 0xffffff });
-        const geometry = new THREE.BufferGeometry().setFromPoints([]);
+        // Crear material para la línea
+        const material = new THREE.LineBasicMaterial({ color: 0x000000 });
 
-        // Crear línea y agregarla a la escena
-        const line = new THREE.Line(geometry, material);
-        scene.add(line);
-
-        // Crear arreglo temporal para almacenar los puntos
-        const points = [];
+        // Función para crear líneas negras
+        function createLine(xPosition, lineHeight) {
+            const yOffset = -3; // Ajusta este valor para cambiar la posición fija en el eje Y de las líneas
+            const points = [
+                new THREE.Vector3(xPosition, yOffset - lineHeight / 2, 0),
+                new THREE.Vector3(xPosition, yOffset + lineHeight / 2, 0)
+            ];
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            return new THREE.Line(geometry, material);
+        }
 
         // Actualizar la línea cuando el mouse se mueve
         canvas.addEventListener('mousemove', (event) => {
-            // Convertir las coordenadas del mouse a coordenadas de espacio de Three.js
-            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            const xPosition = ((event.clientX / window.innerWidth) * 2 - 1) * 5;
+            const yPosition = -((event.clientY / window.innerHeight) * 2 - 1) * 5;
 
-            // Proyectar un rayo desde la cámara hasta el mouse
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(new THREE.Vector2(mouseX, mouseY), camera);
+            // Calcular la altura de la línea basándose en la posición del mouse en Y
+            const minHeight = 1; // Ajusta este valor según la altura mínima deseada
+            const maxHeight = 8; // Ajusta este valor según la altura máxima deseada
+            const lineHeight = Math.min(Math.max(Math.abs(yPosition), minHeight), maxHeight);
 
-            // Encontrar el punto de intersección entre el rayo y el plano Z=0
-            const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-            const intersection = new THREE.Vector3();
-            raycaster.ray.intersectPlane(plane, intersection);
+            const line = createLine(xPosition, lineHeight);
+            scene.add(line);
 
-            // Agregar el punto de intersección al arreglo temporal de puntos
-            points.push(intersection);
-
-            // Actualizar la geometría de la línea
-            line.geometry.setFromPoints(points);
-            line.geometry.attributes.position.needsUpdate = true;
+            // Eliminar la línea después de un tiempo determinado (500 ms en este caso)
+            setTimeout(() => {
+                scene.remove(line);
+                line.geometry.dispose();
+            }, 500);
         });
 
-        // Borrar la línea después de un tiempo
-        setInterval(() => {
-            points.length = 0;
-            line.geometry.setFromPoints(points);
-            line.geometry.attributes.position.needsUpdate = true;
-        }, 1000);
+
+
+
+
 
         // Función de animación
         const animate = () => {
@@ -160,6 +157,8 @@
         };
 
         animate();
+
+
     </script>
 </body>
 
