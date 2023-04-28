@@ -1,20 +1,24 @@
-/*  text animation */
-const tls = gsap.timeline({defaults: {ease:'sine.out'}});
+const element = document.querySelector('#principal');
+element.classList.add('opacity-0', 'translate-x-[-100%]');
 
-/* enter animation */
+const firstElements = document.querySelectorAll('.first');
+firstElements.forEach(el => el.classList.add('opacity-0'));
 
-var enter = document.getElementById('introP');
-
-// Iniciar la animación automáticamente después de 3 segundos
 setTimeout(() => {
-  enterSite();
+  const tl = gsap.timeline({ delay: 1 });
+
+  tl.to(element, {
+    opacity: 1,
+    x: 0,
+    duration: 1,
+    ease: 'power3.out'
+  });
+
+  tl.to(firstElements, {
+    opacity: 1,
+    duration: 1,
+    ease: 'power3.out',
+    stagger: 0
+  });
+
 }, 3000);
-
-enter.addEventListener('click',enterSite, false);
-
-function enterSite(){
- 
-  tls.to('.intro',{y:"100%",duration:.6,stagger:0.25}); 
-  tls.to('#introImage', {y:"150%",duration:.6, stagger:0.25});
-  tls.to('#textPage',{y:"0%",duration:.6,stagger:0.25}); 
-}

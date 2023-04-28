@@ -11,40 +11,84 @@
 </head>
 
 <body>
-    
+
     <body>
-        <div id="intro" class="intro h-screen w-screen flex justify-center items-center">
-            <div id="introText" class="flex flex-col items-center">
-              <img id="introImage" src="./assets/mira.svg" alt="Image description">
+
+
+        <section class="h-screen w-screen">
+            <div id="principal" class="bg-yellow-400 text-white text-center   flex h-full relative z-30">
+
+                <div id="nav" class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full">
+                    <img src="./assets/navlogo.svg" alt="logo" class="h-12 w-auto">
+
+                    <nav class="bg-yellow-400 rounded-full shadow-lg ml-auto mr-4">
+                        <ul class="flex items-center justify-end h-10 pr-6">
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black current-page">Inicio</a>
+                            </li>
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
+                                    de</a>
+                            </li>
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
+                            </li>
+                            <li class="ml-4 group">
+                                <a href="#"
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
+                </div>
+                
+                <div id="footer">
+                    <footer class="first absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center">
+                        <img src="./assets/logofooter.svg" alt="">
+                    </footer>
+                </div> 
+
+                <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold transform -translate-y-10">
+                    <h2> Hola Rafa </h2>
+                </div>
+                
+        
+
+                <!-- <div id="logo">
+                    <h2> creared logo </h2>
+                </div>
+
+                <div id="buttonCall">
+                    <h2>boton llamar</h2>
+                </div>
+
+                
+
+            -->
             </div>
-          </div>
-          
-        
-          <div id="introText" class="text-center">
-            <p id="introP" class="hideText text-sm md:text-base mt-4 leading-6">
-                <span id="textPage">
-                    RAFA!
-                </span>
-            </p>
-            <p id="introP" class="hideText text-sm md:text-base mt-4 leading-6">
-                <span id="textPage">
-                    Estas viendo el inicio de tu pagina web </span>
-            </p>
-            <p id="introP" class="hideText text-sm md:text-base mt-4 leading-6">
-                <span id="textPage">
-                    Todavia nos queda definir las pestañas </span>
-            </p>
-            <p id="introP" class="hideText text-sm md:text-base mt-4 leading-6">
-                <span id="textPage">
-                    necesito que me mandes assets también </span>
-            </p>
-            <p id="introP" class="hideText text-sm md:text-base mt-4 leading-6">
-                <span id="textPage">
-                    sobre este prototipo podemos trabajar ¿que opinas? </span>
-            </p>
-        </div>
-        
-        
+
+            <style>
+                #principalLogo {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            </style>
+            <div>
+                <img id="principalLogo" class="absolute z-0" src="./assets/crearedsonic.svg" alt="">
+            </div>
+        </section>
+
+
+
+
+
+
     </body>
 
     <!-- Incluir la biblioteca GSAP -->
