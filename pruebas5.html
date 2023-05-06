@@ -107,7 +107,7 @@
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 15000);
         camera.position.z = 1000;
 
-        console.log(window.innerWidth / window.innerHeight);
+         
 
         const renderer = new THREE.WebGLRenderer({ canvas: canvas });
         renderer.setClearColor(0xF8D038);
@@ -157,7 +157,7 @@
         setTimeout(() => {
             scene.add(spheresGroup);
             startTime = Date.now();
-        }, 5000);
+        }, 1500);
 
         function createGeodesicSphere(radius, detail) {
             const geometry = new THREE.IcosahedronGeometry(radius, detail);
@@ -179,8 +179,6 @@
         function animate() {
             requestAnimationFrame(animate);
             const currentTime = Date.now();
-
-
 
 
             spheresGroup.children.forEach(lod => {
@@ -222,7 +220,6 @@
                     if (startTime && currentTime - startTime >= 5000 && sphere.material.opacity < 1) {
                         sphere.material.opacity += 0.0005;
                         yes = false;
-                        console.log("si")
                     }
                 });
             });
@@ -243,9 +240,8 @@
         
         animate();
 
-
-
     </script>
+    <script src="./scripts/roulette.js"></script>
 </body>
 
 </html>
