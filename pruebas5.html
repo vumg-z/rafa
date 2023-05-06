@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GSAP Hola Mundo</title>
+    <title>Crea Red - Cool</title>
     <link href="./dist/output.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -107,6 +107,8 @@
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 15000);
         camera.position.z = 1000;
 
+        console.log(window.innerWidth / window.innerHeight);
+
         const renderer = new THREE.WebGLRenderer({ canvas: canvas });
         renderer.setClearColor(0xF8D038);
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -178,13 +180,13 @@
             requestAnimationFrame(animate);
             const currentTime = Date.now();
 
-            
+
 
 
             spheresGroup.children.forEach(lod => {
                 lod.children.forEach(sphere => {
                     // sphere.scale.multiplyScalar(1.0003);
-                    if(yes)
+                    if (yes)
                         sphere.material.opacity = 0;
 
                     sphere.rotation.x += 0.01 * mouseY;
@@ -228,6 +230,17 @@
             renderer.render(scene, camera);
         }
 
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            // Actualiza el tamaño del canvas
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            // Actualiza la relación de aspecto de la cámara
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        }
+        
         animate();
 
 
