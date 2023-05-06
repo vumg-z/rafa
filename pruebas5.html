@@ -100,6 +100,7 @@
     <script src="./scripts/index.js"></script>
 
     <script>
+        startTime = null;
         const canvas = document.getElementById('myCanvas');
 
         const scene = new THREE.Scene();
@@ -117,7 +118,7 @@
         pointLight.position.set(10, 10, 10);
         scene.add(pointLight);
 
-        const material = new THREE.MeshPhongMaterial({ color: 0xffff00, transparent: false, wireframe: true });
+        const material = new THREE.MeshPhongMaterial({ color: 0xffff00, transparent: true, wireframe: true });
         const geometryLevels = [
             [createGeodesicSphere(200, 1), 50],
             [createGeodesicSphere(200, 1), 50],
@@ -151,7 +152,10 @@
             spheresGroup.add(lod);
         }
 
-        scene.add(spheresGroup);
+        setTimeout(() => {
+            scene.add(spheresGroup);
+            startTime = Date.now();
+        }, 5000);
 
         function createGeodesicSphere(radius, detail) {
             const geometry = new THREE.IcosahedronGeometry(radius, detail);
@@ -168,13 +172,21 @@
             mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
         }
 
+        let yes = true;
+
         function animate() {
             requestAnimationFrame(animate);
+            const currentTime = Date.now();
+
+            
+
 
             spheresGroup.children.forEach(lod => {
                 lod.children.forEach(sphere => {
                     // sphere.scale.multiplyScalar(1.0003);
-                    sphere.material.opacity *= 0.9997;
+                    if(yes)
+                        sphere.material.opacity = 0;
+
                     sphere.rotation.x += 0.01 * mouseY;
                     sphere.rotation.y += 0.01 * mouseX;
 
@@ -203,6 +215,12 @@
                     if (sphere.position.z >= maxZ || sphere.position.z <= minZ) {
                         sphere.position.z = (sphere.position.z >= maxZ) ? maxZ : minZ;
                         sphere.userData.speedZ = -sphere.userData.speedZ;
+                    }
+
+                    if (startTime && currentTime - startTime >= 5000 && sphere.material.opacity < 1) {
+                        sphere.material.opacity += 0.0005;
+                        yes = false;
+                        console.log("si")
                     }
                 });
             });
