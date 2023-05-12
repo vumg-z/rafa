@@ -5,39 +5,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GSAP Hola Mundo</title>
+    <title>Crea Red - Cool</title>
     <link href="./dist/output.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 
 </head>
 
 <body>
 
+
+
     <body>
-
-
         <section class="h-screen w-screen">
             <div id="principal" class="bg-yellow-400 text-white text-center   flex h-full relative z-30">
 
-                <div id="nav" class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full">
+                <!-- canvas y mensaje -->
+                <div id="canvasContainer" style="position: relative; width: 100%; height: 100%;">
+                    <canvas id="myCanvas" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
+                    <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold z-50"
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <img src="./assets/navlogo.svg" alt="" srcset="">
+                    </div>
+                </div>
+
+
+                <div id="nav"
+                    class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full z-50">
                     <img src="./assets/navlogo.svg" alt="logo" class="h-12 w-auto">
 
                     <nav class="bg-yellow-400 rounded-full shadow-lg ml-auto mr-4">
                         <ul class="flex items-center justify-end h-10 pr-6">
                             <li class="ml-4 group">
-                                <a href="#"
+                                <a href="#" id="inicio"
                                     class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black current-page">Inicio</a>
                             </li>
                             <li class="ml-4 group">
-                                <a href="#"
+                                <a href="#" id="acerca-de"
                                     class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
                                     de</a>
                             </li>
                             <li class="ml-4 group">
-                                <a href="#"
+                                <a href="#" id="servicios"
                                     class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
                             </li>
                             <li class="ml-4 group">
-                                <a href="#"
+                                <a href="#" id="contacto"
                                     class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
                             </li>
                         </ul>
@@ -45,18 +58,14 @@
 
                     <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
                 </div>
-                
+
                 <div id="footer">
-                    <footer class="first absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center">
+                    <footer
+                        class="first absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center z-50">
                         <img src="./assets/logofooter.svg" alt="">
                     </footer>
-                </div> 
-
-                <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold transform -translate-y-10">
-                    <img src="./assets/navlogo.svg" alt="" srcset="">
                 </div>
-                
-        
+
 
                 <!-- <div id="logo">
                     <h2> creared logo </h2>
@@ -65,8 +74,6 @@
                 <div id="buttonCall">
                     <h2>boton llamar</h2>
                 </div>
-
-                
 
             -->
             </div>
@@ -80,12 +87,11 @@
                 }
             </style>
             <div>
-                <img id="principalLogo" class="absolute z-0" src="./assets/crearedsonic.svg" alt="">
+                <img id="principalLogo" class="absolute z-1" src="./assets/crearedsonic.svg" alt="">
             </div>
         </section>
 
-
-
+        <canvas id="overlayCanvas" style="position: fixed; top: 0; left: 0; z-index: 30; display: none;"></canvas>
 
 
 
@@ -94,6 +100,311 @@
     <!-- Incluir la biblioteca GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="./scripts/index.js"></script>
+
+    <script>
+
+        // canvas overlay logic
+        const overlayCanvas = document.getElementById('overlayCanvas');
+        const overlayCtx = overlayCanvas.getContext('2d');
+        overlayCanvas.width = window.innerWidth;
+        overlayCanvas.height = window.innerHeight;
+        const overlayColor = '#F8D038'; // Cambia el color según lo desees
+
+        function showOverlayAndAnimate(transitionDuration, animationCallback) {
+            let overlayWidth = 0;
+
+            const slideInInterval = setInterval(() => {
+                overlayWidth += overlayCanvas.width / 100;
+                if (overlayWidth >= overlayCanvas.width) {
+                    clearInterval(slideInInterval);
+                    animationCallback();
+                }
+                overlayCtx.fillStyle = overlayColor;
+                overlayCtx.fillRect(0, 0, overlayWidth, overlayCanvas.height);
+            }, transitionDuration / 100);
+
+            setTimeout(() => {
+                const slideOutInterval = setInterval(() => {
+                    overlayWidth -= overlayCanvas.width / 100;
+                    if (overlayWidth <= 0) {
+                        clearInterval(slideOutInterval);
+                        overlayCanvas.style.display = "none";
+                    }
+                    overlayCtx.fillStyle = overlayColor;
+                    overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+                    overlayCtx.fillRect(overlayCanvas.width - overlayWidth, 0, overlayWidth, overlayCanvas.height);
+                }, transitionDuration / 100);
+            }, 3000);
+        }
+
+        document.getElementById('inicio').addEventListener('click', () => {
+            overlayCanvas.style.display = "block";
+
+            showOverlayAndAnimate(500, () => { // Cambiar la duración de la animación a 500 ms
+                rotateCamera(positions.inicio);
+            });
+        });
+
+
+        startTime = null;
+        const canvas = document.getElementById('myCanvas');
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 15000);
+        camera.position.z = 1200;
+
+
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+        renderer.setClearColor(0xF8D038);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+
+        const material = new THREE.MeshPhongMaterial({ color: 0xffff00, transparent: true, wireframe: true });
+        const geometryLevels = [
+            [createGeodesicSphere(200, 1), 50],
+            [createGeodesicSphere(200, 1), 50],
+            [createGeodesicSphere(200, 1), 50],
+        ];
+
+        const spheresGroup = new THREE.Group();
+
+        for (let i = 0; i < 20; i++) {
+            const lod = new THREE.LOD();
+
+            geometryLevels.forEach(([geometry, distance]) => {
+                const sphere = new THREE.Mesh(geometry, material.clone());
+                lod.addLevel(sphere, distance);
+
+                // Establecer la velocidad inicial de cada esfera
+                sphere.userData.speedX = Math.random() * 2 - 1;
+                sphere.userData.speedY = Math.random() * 2 - 1;
+                sphere.userData.speedZ = Math.random() * 2 - 1;
+            });
+
+            let x, y, z;
+            do {
+                x = Math.random() * 2000 - 1000;
+                y = Math.random() * 2000 - 1000;
+                z = Math.random() * 2000 - 1000;
+            } while (Math.sqrt(x * x + y * y + z * z) < 1000);
+
+            lod.position.set(x, y, z);
+
+            spheresGroup.add(lod);
+        }
+
+        setTimeout(() => {
+            scene.add(spheresGroup);
+            startTime = Date.now();
+        }, 1500);
+
+        function createGeodesicSphere(radius, detail) {
+            const geometry = new THREE.IcosahedronGeometry(radius, detail);
+            return geometry;
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        let yes = true;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const currentTime = Date.now();
+
+
+            spheresGroup.children.forEach(lod => {
+                lod.children.forEach(sphere => {
+                    // sphere.scale.multiplyScalar(1.0003);
+                    if (yes)
+                        sphere.material.opacity = 0;
+
+                    sphere.rotation.x += 0.01 * mouseY;
+                    sphere.rotation.y += 0.01 * mouseX;
+
+                    // Mueve las esferas en la pantalla
+                    sphere.position.x += sphere.userData.speedX;
+                    sphere.position.y += sphere.userData.speedY;
+                    sphere.position.z += sphere.userData.speedZ;
+
+                    // Límites de la pantalla (ajustar según sea necesario)
+                    const maxX = 1000;
+                    const minX = -1000;
+                    const maxY = 1000;
+                    const minY = -1000;
+                    const maxZ = 1000;
+                    const minZ = -1000;
+
+                    // Invertir la dirección del movimiento si una esfera alcanza un límite
+                    if (sphere.position.x >= maxX || sphere.position.x <= minX) {
+                        sphere.position.x = (sphere.position.x >= maxX) ? maxX : minX;
+                        sphere.userData.speedX = -sphere.userData.speedX;
+                    }
+                    if (sphere.position.y >= maxY || sphere.position.y <= minY) {
+                        sphere.position.y = (sphere.position.y >= maxY) ? maxY : minY;
+                        sphere.userData.speedY = -sphere.userData.speedY;
+                    }
+                    if (sphere.position.z >= maxZ || sphere.position.z <= minZ) {
+                        sphere.position.z = (sphere.position.z >= maxZ) ? maxZ : minZ;
+                        sphere.userData.speedZ = -sphere.userData.speedZ;
+                    }
+
+                    if (startTime && currentTime - startTime >= 5000 && sphere.material.opacity < 1) {
+                        sphere.material.opacity += 0.0005;
+                        yes = false;
+                    }
+                });
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            // Actualiza el tamaño del canvas
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Actualiza la relación de aspecto de la cámara
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        }
+
+        const positions = {
+            inicio: { y: 0, x: 0 },
+            acercaDe: { y: Math.PI / - 2, x: 0 },
+            servicios: { y: (Math.PI / - 2) * 2, x: 0 },
+            contacto: { y: (Math.PI / - 2) * 3, x: 0 }
+        };
+
+
+        // document.getElementById('inicio').addEventListener('click', () => rotateCamera(positions.inicio));
+        document.getElementById('acerca-de').addEventListener('click', () => rotateCamera(positions.acercaDe));
+        document.getElementById('servicios').addEventListener('click', () => rotateCamera(positions.servicios));
+        document.getElementById('contacto').addEventListener('click', () => rotateCamera(positions.contacto));
+
+
+        // Agrega eventos de clic para los otros elementos del menú
+
+        function easeBack(t, b, c, d, s = 1.70158) {
+            return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+        }
+
+
+        function rotateCamera(targetPosition) {
+            const initialRotationY = camera.rotation.y;
+            const targetRotationY = targetPosition.y;
+
+            const initialRotationX = camera.rotation.x;
+            const targetRotationX = targetPosition.x;
+
+            const duration = 1000; // Duración de la animación en milisegundos
+            const startTime = Date.now();
+
+            function animateRotation() {
+                const elapsed = Date.now() - startTime;
+
+                if (elapsed < duration) {
+                    const easedValueY = easeBack(elapsed, initialRotationY, targetRotationY - initialRotationY, duration);
+                    camera.rotation.y = easedValueY;
+
+                    const easedValueX = easeBack(elapsed, initialRotationX, targetRotationX - initialRotationX, duration);
+                    camera.rotation.x = easedValueX;
+
+                    requestAnimationFrame(animateRotation);
+                } else {
+                    camera.rotation.y = targetRotationY;
+                    camera.rotation.x = targetRotationX;
+                }
+            }
+
+            animateRotation();
+        }
+
+        const keyState = {};
+
+        document.addEventListener('keydown', onKeyDown);
+        document.addEventListener('keyup', onKeyUp);
+
+        function onKeyDown(event) {
+            keyState[event.key] = true;
+        }
+
+        function onKeyUp(event) {
+            keyState[event.key] = false;
+        }
+
+        function update() {
+            const moveDistance = 3; // La distancia que se moverá la cámara en cada paso
+
+            if (keyState['ArrowUp'] || keyState['w']) {
+                camera.translateZ(-moveDistance);
+            }
+            if (keyState['ArrowDown'] || keyState['s']) {
+                camera.translateZ(moveDistance);
+            }
+            if (keyState['ArrowLeft'] || keyState['a']) {
+                camera.translateX(-moveDistance);
+            }
+            if (keyState['ArrowRight'] || keyState['d']) {
+                camera.translateX(moveDistance);
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        document.addEventListener('keydown', onSpacebarPress);
+
+        function onSpacebarPress(event) {
+            if (event.code === 'Space') {
+                applyExplosionForce();
+            }
+        }
+
+        function applyExplosionForce() {
+            const explosionForce = 50; // La fuerza de la explosión
+            const explosionRadius = 1000; // El radio de la explosión
+
+            spheresGroup.children.forEach(lod => {
+                lod.children.forEach(sphere => {
+                    // Calcular la distancia entre la esfera y la cámara
+                    const distance = sphere.position.distanceTo(camera.position);
+
+                    // Si la esfera está dentro del radio de la explosión, aplicar la fuerza
+                    if (distance <= explosionRadius) {
+                        // Calcular la dirección de la fuerza (desde la cámara hacia la esfera)
+                        const forceDirection = sphere.position.clone().sub(camera.position).normalize();
+
+                        // Calcular la fuerza aplicada en función de la distancia al centro de la explosión
+                        const force = (1 - distance / explosionRadius) * explosionForce;
+
+                        // Aplicar la fuerza a la velocidad de la esfera
+                        sphere.userData.speedX += forceDirection.x * force;
+                        sphere.userData.speedY += forceDirection.y * force;
+                        sphere.userData.speedZ += forceDirection.z * force;
+                    }
+                });
+            });
+        }
+
+        update(); // Llamar a la función update para iniciar el bucle de actualización
+        animate();
+
+    </script>
 </body>
 
 </html>
