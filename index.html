@@ -14,8 +14,6 @@
 
 <body>
 
-
-
     <body>
         <section class="h-screen w-screen">
             <div id="principal" class="bg-yellow-400 text-white text-center   flex h-full relative z-30">
@@ -25,7 +23,7 @@
                     <canvas id="myCanvas" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
                     <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold z-50"
                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <img src="./assets/navlogo.svg" alt="" srcset="">
+                        <!-- <img src="./assets/navlogo.svg" alt="" srcset=""> -->
                     </div>
                 </div>
 
@@ -90,7 +88,11 @@
                 <img id="principalLogo" class="absolute z-1" src="./assets/crearedsonic.svg" alt="">
             </div>
         </section>
+        <!-- Otros elementos... -->
+        <img id="overlayLogo" src="./assets/navlogo.svg" alt="Logo"
+            style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 40;">
 
+        <canvas id="overlayCanvas" style="position: fixed; top: 0; left: 0; z-index: 30; display: none;"></canvas>
         <canvas id="overlayCanvas" style="position: fixed; top: 0; left: 0; z-index: 30; display: none;"></canvas>
 
 
@@ -112,6 +114,10 @@
 
         function showOverlayAndAnimate(transitionDuration, animationCallback) {
             let overlayWidth = 0;
+            const overlayLogo = document.getElementById('overlayLogo');  // Obtén la referencia al logo
+            overlayLogo.style.display = 'block';  // Muestra el logo antes de la animación
+
+            gsap.to(overlayLogo, { autoAlpha: 1, duration: 0 });  // Asegúrate de que el logo sea visible antes de la animación
 
             const slideInInterval = setInterval(() => {
                 overlayWidth += overlayCanvas.width / 100;
@@ -129,6 +135,8 @@
                     if (overlayWidth <= 0) {
                         clearInterval(slideOutInterval);
                         overlayCanvas.style.display = "none";
+                        // Desvanece el logo con GSAP. La duración es la misma que la transición
+                        gsap.to(overlayLogo, { autoAlpha: 0, duration: transitionDuration / 1000 });
                     }
                     overlayCtx.fillStyle = overlayColor;
                     overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
@@ -139,9 +147,15 @@
 
 
 
-
-
-
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                showOverlayAndAnimate(1000, () => {
+                    // Redirige a la nueva página aquí, si es necesario
+                    window.location.href = link.href;
+                });
+            });
+        });
 
         startTime = null;
         const canvas = document.getElementById('myCanvas');
@@ -291,18 +305,38 @@
 
         // document.getElementById('inicio').addEventListener('click', () => rotateCamera(positions.inicio));
 
-
-        document.getElementById('inicio').addEventListener('click', () => {
+        document.getElementById('inicio').addEventListener('click', event => {
+            event.preventDefault();
             overlayCanvas.style.display = "block";
-
-            showOverlayAndAnimate(500, () => { // Cambiar la duración de la animación a 500 ms
+            showOverlayAndAnimate(500, () => {
                 rotateCamera(positions.inicio);
             });
         });
 
-        document.getElementById('acerca-de').addEventListener('click', () => rotateCamera(positions.acercaDe));
-        document.getElementById('servicios').addEventListener('click', () => rotateCamera(positions.servicios));
-        document.getElementById('contacto').addEventListener('click', () => rotateCamera(positions.contacto));
+        document.getElementById('acerca-de').addEventListener('click', event => {
+            event.preventDefault();
+            overlayCanvas.style.display = "block";
+            showOverlayAndAnimate(500, () => {
+                rotateCamera(positions.acercaDe);
+            });
+        });
+
+        document.getElementById('servicios').addEventListener('click', event => {
+            event.preventDefault();
+            overlayCanvas.style.display = "block";
+            showOverlayAndAnimate(500, () => {
+                rotateCamera(positions.servicios);
+            });
+        });
+
+        document.getElementById('contacto').addEventListener('click', event => {
+            event.preventDefault();
+            overlayCanvas.style.display = "block";
+            showOverlayAndAnimate(500, () => {
+                rotateCamera(positions.contacto);
+            });
+        });
+
 
 
         // Agrega eventos de clic para los otros elementos del menú
