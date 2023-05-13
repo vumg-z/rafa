@@ -137,13 +137,10 @@
             }, 3000);
         }
 
-        document.getElementById('inicio').addEventListener('click', () => {
-            overlayCanvas.style.display = "block";
 
-            showOverlayAndAnimate(500, () => { // Cambiar la duración de la animación a 500 ms
-                rotateCamera(positions.inicio);
-            });
-        });
+
+
+
 
 
         startTime = null;
@@ -293,6 +290,16 @@
 
 
         // document.getElementById('inicio').addEventListener('click', () => rotateCamera(positions.inicio));
+
+
+        document.getElementById('inicio').addEventListener('click', () => {
+            overlayCanvas.style.display = "block";
+
+            showOverlayAndAnimate(500, () => { // Cambiar la duración de la animación a 500 ms
+                rotateCamera(positions.inicio);
+            });
+        });
+
         document.getElementById('acerca-de').addEventListener('click', () => rotateCamera(positions.acercaDe));
         document.getElementById('servicios').addEventListener('click', () => rotateCamera(positions.servicios));
         document.getElementById('contacto').addEventListener('click', () => rotateCamera(positions.contacto));
