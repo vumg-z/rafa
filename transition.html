@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Transición con Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 10000;
+        }
+
+
+        #overlay {
+            background: #f1e502;
+            position: fixed;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: left 2s linear;
+            /* Cambio a linear */
+            z-index: 9999;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <button id="transition-button">Iniciar Transición</button>
+    <img id="logo" src="./assets/navlogo.svg" />
+    <div id="overlay"></div>
+
+    <script>
+        const transitionButton = document.getElementById("transition-button");
+        transitionButton.addEventListener("click", iniciarTransicion);
+
+        const logo = document.getElementById("logo");
+        const overlay = document.getElementById("overlay");
+
+        function iniciarTransicion() {
+            // Reiniciar la transición
+            overlay.style.transition = 'none';
+            overlay.style.left = '-100%';
+
+            // Forzar un reflow (actualización del DOM)
+            void overlay.offsetWidth;
+
+            // Reestablecer la transición
+            overlay.style.transition = 'left 1s linear'; /* Cambio a linear */
+
+            logo.style.display = "block";
+            overlay.style.left = "0";
+            console.log('Inicio de la transición: ', performance.now());
+
+            setTimeout(function () {
+                overlay.style.left = "100%";
+                console.log('Fin de la transición: ', performance.now());
+            }, 1000);
+
+            setTimeout(function () {
+                logo.style.display = "none";
+                console.log('Logo desaparece: ', performance.now());
+            }, 2000); // Ajuste el tiempo aquí
+        }
+    </script>
+
+</body>
+
+</html>

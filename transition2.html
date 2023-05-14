@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Transición con Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 10000;
+        }
+
+
+        #overlay {
+            background: #F8D038;
+            position: fixed;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: left 2s linear;
+            /* Cambio a linear */
+            z-index: 9999;
+        }
+
+        @keyframes slideAndAppear {
+            0% {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideAndDisappear {
+            0% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -75%);
+                opacity: 0;
+            }
+        }
+
+        #logo {
+            animation-fill-mode: forwards;
+            /* Esta propiedad hace que el logo permanezca en la posición final de la animación */
+        }
+    </style>
+</head>
+
+<body>
+    <button id="transition-button">Iniciar animacion</button>
+    <img id="logo" src="./assets/navlogo.svg" />
+    <div id="overlay"></div>
+
+    <script>
+        const transitionButton = document.getElementById("transition-button");
+        transitionButton.addEventListener("click", iniciarTransicion);
+
+        const logo = document.getElementById("logo");
+        const overlay = document.getElementById("overlay");
+
+        function iniciarTransicion() {
+            // Reiniciar la transición
+            overlay.style.transition = 'none';
+            overlay.style.left = '-100%';
+
+            // Forzar un reflow (actualización del DOM)
+            void overlay.offsetWidth;
+
+            // Reestablecer la transición
+            overlay.style.transition = 'left 1s linear'; /* Cambio a linear */
+
+            logo.style.display = "block";
+            logo.style.animation = 'slideAndAppear 1s forwards';  // Aplicar la animación
+            overlay.style.left = "0";
+
+            setTimeout(function () {
+                overlay.style.left = "100%";
+            }, 2000);
+
+            setTimeout(function () {
+                logo.style.animation = 'slideAndDisappear 1s forwards';  // Aplicar la animación de desaparición
+                setTimeout(function () {
+                    logo.style.display = "none";
+                }, 1000);  // Esperar a que la animación de desaparición termine para ocultar el logo
+            }, 1700);  // Ajustar este tiempo para controlar cuándo comienza la animación de desaparición
+        }
+    </script>
+
+
+
+</body>
+
+</html>

@@ -114,15 +114,14 @@
 
         function showOverlayAndAnimate(transitionDuration, animationCallback) {
             let overlayWidth = 0;
-            const overlayLogo = document.getElementById('overlayLogo');  // Obtén la referencia al logo
-            overlayLogo.style.display = 'block';  // Muestra el logo antes de la animación
-
-            gsap.to(overlayLogo, { autoAlpha: 1, duration: 0 });  // Asegúrate de que el logo sea visible antes de la animación
+            const overlayLogo = document.getElementById('overlayLogo');
+            gsap.to(overlayLogo, { autoAlpha: 1, duration: 0 });
 
             const slideInInterval = setInterval(() => {
                 overlayWidth += overlayCanvas.width / 100;
                 if (overlayWidth >= overlayCanvas.width) {
                     clearInterval(slideInInterval);
+                    overlayLogo.style.display = 'block';  // mostrar el logo
                     animationCallback();
                 }
                 overlayCtx.fillStyle = overlayColor;
@@ -134,17 +133,16 @@
                     overlayWidth -= overlayCanvas.width / 100;
                     if (overlayWidth <= 0) {
                         clearInterval(slideOutInterval);
+                        overlayLogo.style.display = 'none';  // ocultar el logo
                         overlayCanvas.style.display = "none";
-                        // Desvanece el logo con GSAP. La duración es la misma que la transición
-                        gsap.to(overlayLogo, { autoAlpha: 0, duration: transitionDuration / 1000 });
                     }
+                    gsap.to(overlayLogo, { autoAlpha: (overlayWidth / overlayCanvas.width), duration: transitionDuration / 1000 });
                     overlayCtx.fillStyle = overlayColor;
                     overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
                     overlayCtx.fillRect(overlayCanvas.width - overlayWidth, 0, overlayWidth, overlayCanvas.height);
                 }, transitionDuration / 100);
             }, 3000);
         }
-
 
 
         document.querySelectorAll('nav a').forEach(link => {
