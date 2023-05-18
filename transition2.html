@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Transición con Overlay</title>
+    <title>Crea Red</title>
     <style>
         body {
             margin: 0;
@@ -62,47 +62,118 @@
             animation-fill-mode: forwards;
             /* Esta propiedad hace que el logo permanezca en la posición final de la animación */
         }
+
+        #principal {
+            /* display: none;
+            opacity: 0; */
+
+            /* El resto de tus estilos... */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
     </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea Red - Cool</title>
+    <link href="./dist/output.css" rel="stylesheet">
 </head>
 
 <body>
-    <button id="transition-button">Iniciar animacion</button>
+
     <img id="logo" src="./assets/navlogo.svg" />
     <div id="overlay"></div>
 
+    <section class="h-screen w-screen">
+        <div id="principal" class="bg-yellow-400 text-white text-center flex h-full relative z-30">
+
+            <div id="nav" class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full z-50">
+                <img src="./assets/navlogo.svg" alt="logo" class="h-12 w-auto">
+
+                <nav class="bg-yellow-400 rounded-full shadow-lg ml-auto mr-4">
+                    <ul class="flex items-center justify-end h-10 pr-6">
+                        <li class="ml-4 group">
+                            <a href="#" id="inicio"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black current-page">Inicio</a>
+                        </li>
+                        <li class="ml-4 group">
+                            <a href="#" id="acerca-de"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
+                                de</a>
+                        </li>
+                        <li class="ml-4 group">
+                            <a href="#" id="servicios"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
+                        </li>
+                        <li class="ml-4 group">
+                            <a href="#" id="contacto"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
+            </div>
+
+            <div id="footer">
+                <footer class="first absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center z-50">
+                    <img src="./assets/logofooter.svg" alt="">
+                </footer>
+            </div>
+
+
+            <!-- <div id="logo">
+                <h2> creared logo </h2>
+            </div>
+
+            <div id="buttonCall">
+                <h2>boton llamar</h2>
+            </div>
+
+        -->
+        </div>
+    </section>
+
+    <script src="./transition.js"></script>
     <script>
-        const transitionButton = document.getElementById("transition-button");
-        transitionButton.addEventListener("click", iniciarTransicion);
+        const principal = document.getElementById("principal");
 
-        const logo = document.getElementById("logo");
-        const overlay = document.getElementById("overlay");
 
-        function iniciarTransicion() {
-            // Reiniciar la transición
-            overlay.style.transition = 'none';
-            overlay.style.left = '-100%';
+    </script>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const navLinks = document.querySelectorAll('nav ul li a');
 
-            // Forzar un reflow (actualización del DOM)
-            void overlay.offsetWidth;
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();  // Prevenir la acción por defecto del enlace
 
-            // Reestablecer la transición
-            overlay.style.transition = 'left 1s linear'; /* Cambio a linear */
+                    // Iniciar la transición
+                    iniciarTransicion(function () {
+                        // Al final de la transición, mostrar la sección correspondiente
+                        const targetSectionId = this.getAttribute('id');
+                        const targetSection = document.getElementById(targetSectionId);
 
-            logo.style.display = "block";
-            logo.style.animation = 'slideAndAppear 1s forwards';  // Aplicar la animación
-            overlay.style.left = "0";
-
-            setTimeout(function () {
-                overlay.style.left = "100%";
-            }, 2000);
-
-            setTimeout(function () {
-                logo.style.animation = 'slideAndDisappear 1s forwards';  // Aplicar la animación de desaparición
-                setTimeout(function () {
-                    logo.style.display = "none";
-                }, 1000);  // Esperar a que la animación de desaparición termine para ocultar el logo
-            }, 1700);  // Ajustar este tiempo para controlar cuándo comienza la animación de desaparición
-        }
+                        if (targetSection) {
+                            targetSection.style.display = 'block';
+                            targetSection.classList.add('fade-in');
+                        }
+                    }.bind(this));
+                });
+            });
+        });
     </script>
 
 
