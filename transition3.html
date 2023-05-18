@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Crea Red</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 10000;
+        }
+
+
+        #overlay {
+            background: #F8D038;
+            position: fixed;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: left 2s linear;
+            /* Cambio a linear */
+            z-index: 9999;
+        }
+
+        @keyframes slideAndAppear {
+            0% {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideAndDisappear {
+            0% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -75%);
+                opacity: 0;
+            }
+        }
+
+        #logo {
+            animation-fill-mode: forwards;
+            /* Esta propiedad hace que el logo permanezca en la posición final de la animación */
+        }
+
+        #principal>* {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea Red - Cool</title>
+    <link href="./dist/output.css" rel="stylesheet">
+</head>
+
+<body onload="iniciarTransicionInicio(function() {
+    console.log('si');
+})">
+
+    <img id="logo" src="./assets/navlogo.svg" />
+    <div id="overlay"></div>
+
+    <section class="h-screen w-screen">
+        <div id="principal" class="bg-yellow-400 text-white text-center flex h-full relative z-30">
+
+            <div id="nav" class="first flex justify-between items-center px-4 py-2 absolute top-0 left-0 w-full z-50">
+                <img src="./assets/navlogo.svg" alt="logo" class="h-12 w-auto">
+
+                <nav class="bg-yellow-400 rounded-full shadow-lg ml-auto mr-4">
+                    <ul class="flex items-center justify-end h-10 pr-6">
+                        <li class="ml-4 group">
+                            <a href="#" id="inicio"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black current-page">Inicio</a>
+                        </li>
+                        <li class="ml-4 group">
+                            <a href="#" id="acerca-de"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
+                                de</a>
+                        </li>
+                        <li class="ml-4 group">
+                            <a href="#" id="servicios"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
+                        </li>
+                        <li class="ml-4 group">
+                            <a href="#" id="contacto"
+                                class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
+            </div>
+
+            <div id="footer">
+                <footer class="first absolute inset-x-0 bottom-0 h-16 bg-black flex items-center justify-center z-50">
+                    <img src="./assets/logofooter.svg" alt="">
+                </footer>
+            </div>
+
+
+            <!-- <div id="logo">
+                <h2> creared logo </h2>
+            </div>
+
+            <div id="buttonCall">
+                <h2>boton llamar</h2>
+            </div>
+
+        -->
+        </div>
+    </section>
+
+    <script src="./transition.js"></script>
+    <script src="./transition2.js"></script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const navLinks = document.querySelectorAll('nav ul li a');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();  // Prevenir la acción por defecto del enlace
+
+                    // Iniciar la transición
+                    iniciarTransicion(function () {
+                        // Al final de la transición, mostrar la sección correspondiente
+                        const targetSectionId = this.getAttribute('id');
+                        const targetSection = document.getElementById(targetSectionId);
+
+                        if (targetSection) {
+                            targetSection.style.display = 'block';
+                            targetSection.classList.add('fade-in');
+                        }
+                    }.bind(this));
+                });
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

@@ -11,25 +11,25 @@ window.iniciarTransicion = function(callback) {
         void overlay.offsetWidth;
 
         // Reestablecer la transición
-        overlay.style.transition = 'left 1s linear'; /* Cambio a linear */
+        overlay.style.transition = 'left 0.85s linear'; /* Cambio a linear y reducido en 15% */
 
         logo.style.display = "block";
-        logo.style.animation = 'slideAndAppear 1s forwards';  // Aplicar la animación
+        logo.style.animation = 'slideAndAppear 0.85s forwards';  // Aplicar la animación y reducido en 15%
         overlay.style.left = "0";
 
         setTimeout(function () {
             overlay.style.left = "100%";
-        }, 2000);
+        }, Math.round(2000 * 0.85)); // Reducido en 15%
 
         setTimeout(function () {
-            logo.style.animation = 'slideAndDisappear 1s forwards';  // Aplicar la animación de desaparición
+            logo.style.animation = 'slideAndDisappear 0.85s forwards';  // Aplicar la animación de desaparición y reducido en 15%
             setTimeout(function () {
                 logo.style.display = "none";
                 if (callback && typeof callback === 'function') {
                     callback();
                 }
-            }, 1000);  // Esperar a que la animación de desaparición termine para ocultar el logo
-        }, 1700);  // Ajustar este tiempo para controlar cuándo comienza la animación de desaparición
+            }, Math.round(1000 * 0.85));  // Reducido en 15%
+        }, Math.round(1700 * 0.85));  // Reducido en 15%
     }
 
     iniciarTransicion();
