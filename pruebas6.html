@@ -9,7 +9,47 @@
     <link href="./dist/output.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+    <style>
+        .portafolio {
+            background-color: #f0f0f000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 30;
+            display: none;
+        }
 
+        .portafolio h2 {
+            margin: 10px 0;
+            padding: 10px;
+            text-align: center;
+            background-color: #dd0d0d00;
+            border-radius: 5px;
+        }
+
+        .contactoDiv {
+            background-color: #f0f0f000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 30;
+            display: none;
+        }
+
+        .contactoDiv h2 {
+            margin: 10px 0;
+            padding: 10px;
+            text-align: center;
+            background-color: #dd0d0d00;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,7 +65,45 @@
                     <canvas id="myCanvas" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
                     <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold z-50"
                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <img src="./assets/navlogo.svg" alt="" srcset="">
+
+                        <img id="creared" src="./assets/navlogo.svg" alt="" srcset="">
+
+                        <div id="portafolio" class="portafolio">
+                            <a href="#" class="group">
+                                <h2
+                                    class="text-gray-700 hover:text-gray-900 border-b-0  group-hover:border-b-2 group-hover:border-black">
+                                    Impresa</h2>
+                            </a>
+                            <a href="#" class="group">
+                                <h2
+                                    class="text-gray-700 hover:text-gray-900 border-b-0  group-hover:border-b-2 group-hover:border-black">
+                                    Fixe Monitor</h2>
+                            </a>
+                            <a href="#" class="group">
+                                <h2
+                                    class="text-gray-700 hover:text-gray-900 border-b-0  group-hover:border-b-2 group-hover:border-black">
+                                    Orden HsuYun</h2>
+                            </a>
+                            <a href="#" class="group">
+                                <h2
+                                    class="text-gray-700 hover:text-gray-900 border-b-0  group-hover:border-b-2 group-hover:border-black">
+                                    Verlo</h2>
+                            </a>
+                        </div>
+
+                        <div id="contactoDiv" class="contactoDiv">
+                            <a href="#" class="group">
+                                <h2
+                                    class="text-gray-700 hover:text-gray-900 border-b-0  group-hover:border-b-2 group-hover:border-black">
+                                    rafa@creared.cool</h2>
+                            </a>
+                            <a href="#" class="group">
+                                <h2
+                                    class="text-gray-700 hover:text-gray-900 border-b-0  group-hover:border-b-2 group-hover:border-black">
+                                    uriel@creared.cool</h2>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
 
@@ -42,13 +120,9 @@
                             </li>
                             <li class="ml-4 group">
                                 <a href="#" id="acerca-de"
-                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
-                                    de</a>
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Portafolio</a>
                             </li>
-                            <li class="ml-4 group">
-                                <a href="#" id="servicios"
-                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
-                            </li>
+
                             <li class="ml-4 group">
                                 <a href="#" id="contacto"
                                     class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
@@ -56,7 +130,7 @@
                         </ul>
                     </nav>
 
-                    <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
+                    <!-- <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button> -->
                 </div>
 
                 <div id="footer">
@@ -138,11 +212,8 @@
         }
 
         document.getElementById('inicio').addEventListener('click', () => {
-            overlayCanvas.style.display = "block";
-
-            showOverlayAndAnimate(500, () => { // Cambiar la duración de la animación a 500 ms
-                rotateCamera(positions.inicio);
-            });
+            rotateCamera(positions.inicio);
+            hideMessage('creared', ['portafolio', 'contactoDiv']);
         });
 
 
@@ -293,15 +364,30 @@
 
 
         // document.getElementById('inicio').addEventListener('click', () => rotateCamera(positions.inicio));
-        document.getElementById('acerca-de').addEventListener('click', () => rotateCamera(positions.acercaDe));
-        document.getElementById('servicios').addEventListener('click', () => rotateCamera(positions.servicios));
-        document.getElementById('contacto').addEventListener('click', () => rotateCamera(positions.contacto));
+        document.getElementById('acerca-de').addEventListener('click', () => {
+            rotateCamera(positions.acercaDe);
+            hideMessage('portafolio', ['creared', 'contactoDiv']);
+        });
+
+        document.getElementById('contacto').addEventListener('click', () => {
+            rotateCamera(positions.contacto);
+            hideMessage('contactoDiv', ['creared', 'portafolio']);
+
+        });
 
 
         // Agrega eventos de clic para los otros elementos del menú
 
         function easeBack(t, b, c, d, s = 1.70158) {
             return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+        }
+
+        function hideMessage(elementIdToShow, elementIdsToHide) {
+            elementIdsToHide.forEach(elementId => {
+                document.getElementById(elementId).style.display = "none";
+            });
+
+            document.getElementById(elementIdToShow).style.display = "block";
         }
 
 
