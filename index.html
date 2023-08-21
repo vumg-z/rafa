@@ -8,9 +8,61 @@
     <title>Crea Red - Cool</title>
     <link href="./dist/output.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        .portafolio {
+            background-color: #F8D038;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 30;
+            display: none;
+        }
+
+        .portafolio h2 {
+            margin: 10px 0;
+            padding: 10px;
+            text-align: center;
+            background-color: #dd0d0d00;
+            border-radius: 5px;
+        }
+
+        .contactoDiv {
+            background-color: #F8D038;
+            ;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 30;
+            display: none;
+        }
+
+        .contactoDiv h2 {
+            margin: 10px 0;
+            padding: 10px;
+            text-align: center;
+            background-color: #dd0d0d00;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
+
+
 
     <body>
         <section class="h-screen w-screen">
@@ -21,7 +73,42 @@
                     <canvas id="myCanvas" style="position: absolute; top: 0; left: 0; z-index: 10;"></canvas>
                     <div id="message" class="text-gray-700 first m-auto text-center text-4xl font-semibold z-50"
                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <!-- <img src="./assets/navlogo.svg" alt="" srcset=""> -->
+
+                        <img id="creared" src="./assets/navlogo.svg" alt="" srcset="">
+
+                        <div id="portafolio" class="portafolio">
+                            <a href="https://impresamx.com.mx/" class="group" target="_blank">
+                                <h2 class="text-gray-700 hover:text-gray-900 group-hover:border-black">
+                                    Impresa</h2>
+                            </a>
+                            <a href="https://fixe.mx/" class="group" target="_blank">
+                                <h2 class="text-gray-700 hover:text-gray-900 border-b-0 group-hover:border-black">
+                                    Fixe Monitor</h2>
+                            </a>
+                            <a href="https://www.ordenhsuyunlatinoamerica.com/" class="group" target="_blank">
+                                <h2 class="text-gray-700 hover:text-gray-900 border-b-0 group-hover:border-black">
+                                    Orden HsuYun</h2>
+                            </a>
+                            <a href="https://verlo.co/" class="group" target="_blank">
+                                <h2 class="text-gray-700 hover:text-gray-900 border-b-0 group-hover:border-black">
+                                    Verlo</h2>
+                            </a>
+                        </div>
+
+
+
+                        <div id="contactoDiv" class="contactoDiv">
+                            <a href="mailto:rafa@creared.cool" class="group">
+                                <h2 class="text-gray-700 hover:text-gray-900 border-b-0 group-hover:border-black">
+                                    rafa@creared.cool</h2>
+                            </a>
+                            <a href="mailto:uriel@creared.cool" class="group">
+                                <h2 class="text-gray-700 hover:text-gray-900 border-b-0 group-hover:border-black">
+                                    uriel@creared.cool</h2>
+                            </a>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -38,13 +125,9 @@
                             </li>
                             <li class="ml-4 group">
                                 <a href="#" id="acerca-de"
-                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Acerca
-                                    de</a>
+                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Portafolio</a>
                             </li>
-                            <li class="ml-4 group">
-                                <a href="#" id="servicios"
-                                    class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Servicios</a>
-                            </li>
+
                             <li class="ml-4 group">
                                 <a href="#" id="contacto"
                                     class="text-gray-700 hover:text-gray-900 text-sm font-medium border-b-0 border-transparent group-hover:border-b-2 group-hover:border-black">Contacto</a>
@@ -52,7 +135,7 @@
                         </ul>
                     </nav>
 
-                    <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button>
+                    <!-- <button class="bg-black text-white px-4 py-2 rounded ml-4 shadow-md hover:shadow-lg">Llamar</button> -->
                 </div>
 
                 <div id="footer">
@@ -86,11 +169,7 @@
                 <img id="principalLogo" class="absolute z-1" src="./assets/crearedsonic.svg" alt="">
             </div>
         </section>
-        <!-- Otros elementos... -->
-        <img id="overlayLogo" src="./assets/navlogo.svg" alt="Logo"
-            style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 40;">
 
-        <canvas id="overlayCanvas" style="position: fixed; top: 0; left: 0; z-index: 30; display: none;"></canvas>
         <canvas id="overlayCanvas" style="position: fixed; top: 0; left: 0; z-index: 30; display: none;"></canvas>
 
 
@@ -100,6 +179,13 @@
     <!-- Incluir la biblioteca GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="./scripts/index.js"></script>
+
+    <script>
+        if (window.location.protocol !== "https:") {
+            window.location.href = "https://" + window.location.host + window.location.pathname;
+        }
+    </script>
+
 
     <script>
 
@@ -112,14 +198,11 @@
 
         function showOverlayAndAnimate(transitionDuration, animationCallback) {
             let overlayWidth = 0;
-            const overlayLogo = document.getElementById('overlayLogo');
-            gsap.to(overlayLogo, { autoAlpha: 1, duration: 0 });
 
             const slideInInterval = setInterval(() => {
                 overlayWidth += overlayCanvas.width / 100;
                 if (overlayWidth >= overlayCanvas.width) {
                     clearInterval(slideInInterval);
-                    overlayLogo.style.display = 'block';  // mostrar el logo
                     animationCallback();
                 }
                 overlayCtx.fillStyle = overlayColor;
@@ -131,10 +214,8 @@
                     overlayWidth -= overlayCanvas.width / 100;
                     if (overlayWidth <= 0) {
                         clearInterval(slideOutInterval);
-                        overlayLogo.style.display = 'none';  // ocultar el logo
                         overlayCanvas.style.display = "none";
                     }
-                    gsap.to(overlayLogo, { autoAlpha: (overlayWidth / overlayCanvas.width), duration: transitionDuration / 1000 });
                     overlayCtx.fillStyle = overlayColor;
                     overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
                     overlayCtx.fillRect(overlayCanvas.width - overlayWidth, 0, overlayWidth, overlayCanvas.height);
@@ -142,16 +223,11 @@
             }, 3000);
         }
 
-
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', event => {
-                event.preventDefault();
-                showOverlayAndAnimate(1000, () => {
-                    // Redirige a la nueva página aquí, si es necesario
-                    window.location.href = link.href;
-                });
-            });
+        document.getElementById('inicio').addEventListener('click', () => {
+            rotateCamera(positions.inicio);
+            hideMessage('creared', ['portafolio', 'contactoDiv']);
         });
+
 
         startTime = null;
         const canvas = document.getElementById('myCanvas');
@@ -300,45 +376,30 @@
 
 
         // document.getElementById('inicio').addEventListener('click', () => rotateCamera(positions.inicio));
-
-        document.getElementById('inicio').addEventListener('click', event => {
-            event.preventDefault();
-            overlayCanvas.style.display = "block";
-            showOverlayAndAnimate(500, () => {
-                rotateCamera(positions.inicio);
-            });
+        document.getElementById('acerca-de').addEventListener('click', () => {
+            rotateCamera(positions.acercaDe);
+            hideMessage('portafolio', ['creared', 'contactoDiv']);
         });
 
-        document.getElementById('acerca-de').addEventListener('click', event => {
-            event.preventDefault();
-            overlayCanvas.style.display = "block";
-            showOverlayAndAnimate(500, () => {
-                rotateCamera(positions.acercaDe);
-            });
-        });
+        document.getElementById('contacto').addEventListener('click', () => {
+            rotateCamera(positions.contacto);
+            hideMessage('contactoDiv', ['creared', 'portafolio']);
 
-        document.getElementById('servicios').addEventListener('click', event => {
-            event.preventDefault();
-            overlayCanvas.style.display = "block";
-            showOverlayAndAnimate(500, () => {
-                rotateCamera(positions.servicios);
-            });
         });
-
-        document.getElementById('contacto').addEventListener('click', event => {
-            event.preventDefault();
-            overlayCanvas.style.display = "block";
-            showOverlayAndAnimate(500, () => {
-                rotateCamera(positions.contacto);
-            });
-        });
-
 
 
         // Agrega eventos de clic para los otros elementos del menú
 
         function easeBack(t, b, c, d, s = 1.70158) {
             return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+        }
+
+        function hideMessage(elementIdToShow, elementIdsToHide) {
+            elementIdsToHide.forEach(elementId => {
+                document.getElementById(elementId).style.display = "none";
+            });
+
+            document.getElementById(elementIdToShow).style.display = "block";
         }
 
 
